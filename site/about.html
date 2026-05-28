@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E[X] Showdown — Info</title>
+<meta name="description" content="E[X] Showdown rules, format, and submission details. Northeastern's algorithmic poker bot tournament.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230a0a0a' width='100' height='100' rx='4'/><text x='50' y='68' font-size='32' fill='%2300ff41' text-anchor='middle' font-family='monospace' font-weight='bold'>E[X]</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0a0a0a;
+  --bg-panel:#0f0f0f;
+  --border:#1a2e1a;
+  --green:#00ff41;
+  --green-dim:#00cc33;
+  --green-muted:#3a6e3a;
+  --fg:#c8c8c8;
+  --fg-dim:#888;
+  --white:#fff;
+  --cyan:#00ffcc;
+  --red:#ff4444;
+  --mono:'Share Tech Mono','Courier New',monospace;
+  --max:760px;
+}
+
+html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--mono);line-height:1.7}
+a{color:var(--green);text-decoration:none;transition:color 0.15s}
+a:hover{color:var(--cyan)}
+::selection{background:var(--green);color:#000}
+code{background:#111;padding:2px 6px;font-size:13px;color:var(--green)}
+
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);opacity:0.5}
+
+/* Nav */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:var(--max);margin:0 auto}
+.nav-logo{font-size:16px;color:var(--green);font-weight:400;letter-spacing:1px}
+.blink{animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}
+.nav-links a{font-size:13px;color:var(--fg-dim);letter-spacing:1px;transition:color 0.15s}
+.nav-links a:hover{color:var(--green)}
+
+/* Content */
+.content{max-width:var(--max);margin:0 auto;padding:48px 24px 64px}
+h1{color:var(--green);font-size:20px;font-weight:400;letter-spacing:2px;margin-bottom:32px}
+h2{color:var(--green);font-size:14px;font-weight:400;letter-spacing:1px;text-transform:uppercase;margin-top:40px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+h3{color:var(--white);font-size:13px;font-weight:400;letter-spacing:1px;margin-top:20px;margin-bottom:8px}
+p{font-size:13px;color:var(--fg-dim);margin-bottom:12px;line-height:1.8}
+ul{list-style:none;margin-bottom:16px}
+ul li{font-size:13px;color:var(--fg-dim);padding:4px 0;padding-left:16px;position:relative;line-height:1.7}
+ul li::before{content:'>';color:var(--green-muted);position:absolute;left:0}
+
+/* Table */
+.info-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}
+.info-table td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+.info-table td:first-child{color:var(--green-muted);width:140px;white-space:nowrap}
+
+/* Code block */
+.code-block{background:#111;border:1px solid var(--border);padding:16px;margin:16px 0;overflow-x:auto;font-size:12px;line-height:1.8}
+.code-block .comment{color:var(--green-muted)}
+.code-block .keyword{color:var(--green)}
+.code-block .string{color:var(--cyan)}
+
+/* Warning box */
+.warn-box{border:1px solid var(--red);background:rgba(255,68,68,0.05);padding:16px;margin:16px 0;font-size:12px;color:var(--fg-dim)}
+.warn-box strong{color:var(--red)}
+
+/* Footer */
+footer{border-top:1px solid var(--border);max-width:var(--max);margin:0 auto;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+footer span{font-size:11px;color:var(--green-muted)}
+
+@media(max-width:640px){
+  .info-table td:first-child{width:100px}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">>. e[x].showdown:~$<span class="blink">_</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="https://forms.gle/FvVqxmq3Qm2QcJ2W9" target="_blank" rel="noopener">Register</a></li>
+  </ul>
+</nav>
+
+<div class="content">
+
+<h1>// Info</h1>
+
+<p>E[X] Showdown is an algorithmic poker tournament run by E[X], Northeastern's prediction markets club. You write a Python bot that plays No-Limit Texas Hold'em. The engine handles everything else &mdash; dealing, betting, hand evaluation, tournament pairing, and scoring.</p>
+
+<h2>Format</h2>
+
+<table class="info-table">
+  <tr><td>Game</td><td>No-Limit Texas Hold'em (6-max tables)</td></tr>
+  <tr><td>Language</td><td>Python 3.10</td></tr>
+  <tr><td>Interface</td><td>One function: <code>decide(game_state) &rarr; action</code></td></tr>
+  <tr><td>Qualifier</td><td>Swiss-system tournament, 400 hands per match</td></tr>
+  <tr><td>Ranking</td><td>Cumulative chip delta across all rounds</td></tr>
+  <tr><td>Finals</td><td>Single-elimination bracket, streamed live</td></tr>
+  <tr><td>Eligibility</td><td>Northeastern students, all majors</td></tr>
+</table>
+
+<h2>Your Bot</h2>
+
+<p>You submit one file &mdash; <code>bot.py</code> &mdash; with one function:</p>
+
+<div class="code-block">
+<span class="keyword">def</span> decide(game_state: <span class="keyword">dict</span>) -> <span class="keyword">dict</span>:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># your entire strategy goes here</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> {<span class="string">"action"</span>: <span class="string">"call"</span>}
+</div>
+
+<p>The engine calls <code>decide()</code> once per action. You get the full game state &mdash; your cards, community cards, pot size, stack sizes, betting history, position. You return one action.</p>
+
+<h3>Game State</h3>
+<table class="info-table">
+  <tr><td><code>your_cards</code></td><td>Your two hole cards, e.g. <code>["As", "Kh"]</code></td></tr>
+  <tr><td><code>community_cards</code></td><td>Board cards, e.g. <code>["7d", "Tc", "2s"]</code></td></tr>
+  <tr><td><code>street</code></td><td><code>preflop</code> / <code>flop</code> / <code>turn</code> / <code>river</code></td></tr>
+  <tr><td><code>pot</code></td><td>Total chips in the pot</td></tr>
+  <tr><td><code>your_stack</code></td><td>Your remaining chips</td></tr>
+  <tr><td><code>amount_owed</code></td><td>Chips needed to call (0 = free check)</td></tr>
+  <tr><td><code>can_check</code></td><td>True when no bet to call</td></tr>
+  <tr><td><code>min_raise_to</code></td><td>Minimum legal raise total</td></tr>
+  <tr><td><code>players</code></td><td>Public info on all seats</td></tr>
+  <tr><td><code>action_log</code></td><td>Every action taken this hand</td></tr>
+</table>
+
+<h3>Valid Actions</h3>
+<div class="code-block">
+{<span class="string">"action"</span>: <span class="string">"fold"</span>}<br>
+{<span class="string">"action"</span>: <span class="string">"check"</span>}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># only when can_check is True</span><br>
+{<span class="string">"action"</span>: <span class="string">"call"</span>}<br>
+{<span class="string">"action"</span>: <span class="string">"raise"</span>, <span class="string">"amount"</span>: 1200}&nbsp;&nbsp;<span class="comment"># total bet, not raise-by</span><br>
+{<span class="string">"action"</span>: <span class="string">"all_in"</span>}
+</div>
+
+<p>Invalid or missing actions default to fold. Raises below the minimum are snapped up automatically.</p>
+
+<h2>Rules</h2>
+<ul>
+  <li>2 seconds to return an action or your bot auto-folds</li>
+  <li>No network calls during gameplay</li>
+  <li>No file writes &mdash; filesystem is read-only at runtime</li>
+  <li>768 MB RAM, 0.5 CPU core per bot</li>
+  <li>Crashes and exceptions auto-fold for that hand &mdash; your bot stays in the tournament</li>
+</ul>
+
+<h3>Available Libraries</h3>
+<p><code>eval7</code> &middot; <code>numpy</code> &middot; <code>scipy</code> &middot; <code>treys</code> &middot; <code>scikit-learn</code></p>
+
+<div class="warn-box">
+  <strong>Not allowed:</strong> No external API calls (no LLMs, no webhooks). No reading other bots' code or cards. No file writes. No threading tricks to dodge the timeout. No collusion between bots. Violations = disqualification.
+</div>
+
+<h2>Submission</h2>
+
+<p>Submit either:</p>
+<ul>
+  <li><code>bot.py</code> &mdash; single file, simple bot</li>
+  <li><code>bot.zip</code> containing <code>bot.py</code> + optional <code>data/</code> &mdash; for bots shipping lookup tables, neural net weights, CFR blueprints, etc.</li>
+</ul>
+
+<p><code>data/</code> constraints: 200 MB max, no <code>.py</code> files, read-only at runtime, loaded at import time only via <code>os.environ["BOT_DATA_DIR"]</code>.</p>
+
+<h2>Getting Started</h2>
+
+<div class="code-block">
+git clone https://github.com/uzlez/fullhouse-engine<br>
+cd fullhouse-engine<br>
+<br>
+<span class="comment"># install deps (eval7 needs Python 3.10)</span><br>
+pip install <span class="string">"Cython&lt;3"</span><br>
+pip install --no-build-isolation eval7==0.1.7<br>
+pip install flask numpy scipy treys scikit-learn<br>
+<br>
+<span class="comment"># run the demo</span><br>
+python demo.py<br>
+<span class="comment"># open http://localhost:5001</span><br>
+<br>
+<span class="comment"># start your bot</span><br>
+cp -r bots/template bots/mybot<br>
+<span class="comment"># edit bots/mybot/bot.py</span><br>
+<br>
+<span class="comment"># test your bot</span><br>
+python sandbox/match.py bots/mybot/bot.py bots/shark/bot.py --hands 400
+</div>
+
+<h2>Sample Submission &mdash; demo.py</h2>
+
+<p>Here's the full <code>demo.py</code> that ships with the engine repo. It spins up a local Flask server, runs matches between built-in bots, and shows results live. Study it to understand how the engine calls your bot and how matches work end-to-end.</p>
+
+<details style="margin:16px 0">
+<summary style="cursor:pointer;color:var(--green);font-size:13px;letter-spacing:1px;user-select:none">&#9654; Click to expand full demo.py source</summary>
+<div class="code-block" style="max-height:70vh;overflow-y:auto;margin-top:12px"><span class="comment">"""
+E[X] Showdown — Local Demo
+Run: python demo.py
+Open: http://localhost:5001
+
+No Docker, Redis, or Supabase needed.
+Runs real matches using the actual game engine and shows results live.
+"""</span>
+
+<span class="keyword">import</span> sys, os, json, time, threading, uuid, random
+sys.path.insert(0, os.path.dirname(__file__))
+
+<span class="keyword">from</span> flask <span class="keyword">import</span> Flask, Response, jsonify, render_template_string
+<span class="keyword">from</span> sandbox.match <span class="keyword">import</span> run_match
+<span class="keyword">from</span> engine.tournament <span class="keyword">import</span> swiss_pairing, compute_standings, select_finalists
+
+app = Flask(__name__)
+
+<span class="comment"># ---------------------------------------------------------------------------
+# State (in-memory for demo)
+# ---------------------------------------------------------------------------</span>
+
+BOT_PATHS = {
+    <span class="string">"The Aggressor"</span>:    <span class="string">"bots/aggressor/bot.py"</span>,
+    <span class="string">"The Mathematician"</span>:<span class="string">"bots/mathematician/bot.py"</span>,
+    <span class="string">"The Shark"</span>:        <span class="string">"bots/shark/bot.py"</span>,
+    <span class="string">"Template Bot A"</span>:   <span class="string">"bots/template/bot.py"</span>,
+    <span class="string">"Pot-Odds Bot B"</span>:   <span class="string">"bots/ref_bot_2/bot.py"</span>,
+    <span class="string">"Template Bot C"</span>:   <span class="string">"bots/template/bot.py"</span>,
+}
+
+state = {
+    <span class="string">"log"</span>:        [],   <span class="comment"># event log (SSE stream)</span>
+    <span class="string">"standings"</span>:  [],   <span class="comment"># current leaderboard</span>
+    <span class="string">"hands"</span>:      [],   <span class="comment"># last match hand history</span>
+    <span class="string">"running"</span>:    <span class="keyword">False</span>,
+    <span class="string">"round"</span>:      0,
+}
+
+log_lock = threading.Lock()
+
+<span class="keyword">def</span> emit(msg, kind=<span class="string">"info"</span>):
+    <span class="keyword">with</span> log_lock:
+        state[<span class="string">"log"</span>].append({<span class="string">"t"</span>: time.time(), <span class="string">"msg"</span>: msg, <span class="string">"kind"</span>: kind})
+
+<span class="comment"># ---------------------------------------------------------------------------
+# Routes
+# ---------------------------------------------------------------------------</span>
+
+@app.route(<span class="string">"/"</span>)
+<span class="keyword">def</span> index():
+    <span class="keyword">return</span> render_template_string(PAGE)
+
+
+@app.route(<span class="string">"/stream"</span>)
+<span class="keyword">def</span> stream():
+    <span class="comment">"""SSE endpoint — pushes log events to the browser in real time."""</span>
+    <span class="keyword">def</span> generate():
+        last = 0
+        <span class="keyword">while True</span>:
+            <span class="keyword">with</span> log_lock:
+                new = state[<span class="string">"log"</span>][last:]
+                last = len(state[<span class="string">"log"</span>])
+            <span class="keyword">for</span> entry <span class="keyword">in</span> new:
+                <span class="keyword">yield</span> f<span class="string">"data: {json.dumps(entry)}\n\n"</span>
+            time.sleep(0.2)
+    <span class="keyword">return</span> Response(generate(), mimetype=<span class="string">"text/event-stream"</span>,
+                    headers={<span class="string">"Cache-Control"</span>: <span class="string">"no-cache"</span>})
+
+
+@app.route(<span class="string">"/run/match"</span>, methods=[<span class="string">"POST"</span>])
+<span class="keyword">def</span> run_single_match():
+    <span class="comment">"""Run one 6-player match and return updated standings."""</span>
+    bot_ids  = list(BOT_PATHS.keys())
+    match_id = f<span class="string">"demo_{uuid.uuid4().hex[:8]}"</span>
+
+    emit(f<span class="string">"Starting match {match_id}..."</span>, <span class="string">"dim"</span>)
+    t0 = time.time()
+
+    result = run_match(match_id, BOT_PATHS, n_hands=150, verbose=<span class="keyword">False</span>)
+    elapsed = time.time() - t0
+
+    emit(f<span class="string">"Match complete in {elapsed:.1f}s"</span>, <span class="string">"dim"</span>)
+
+    <span class="comment"># Update standings</span>
+    all_results = []
+    <span class="keyword">for</span> bid, delta <span class="keyword">in</span> result[<span class="string">"chip_delta"</span>].items():
+        all_results.append({<span class="string">"bot_id"</span>: bid, <span class="string">"bot_path"</span>: BOT_PATHS.get(bid,<span class="string">""</span>), <span class="string">"chip_delta"</span>: delta})
+
+    prev = {s[<span class="string">"bot_id"</span>]: s <span class="keyword">for</span> s <span class="keyword">in</span> state[<span class="string">"standings"</span>]}
+    new_standings = compute_standings(
+        [{**s, <span class="string">"chip_delta"</span>: s[<span class="string">"cumulative_delta"</span>]} <span class="keyword">for</span> s <span class="keyword">in</span> state[<span class="string">"standings"</span>]] + all_results
+    )
+    state[<span class="string">"standings"</span>] = new_standings
+
+    <span class="comment"># Log results</span>
+    sorted_res = sorted(result[<span class="string">"chip_delta"</span>].items(), key=<span class="keyword">lambda</span> x: -x[1])
+    <span class="keyword">for</span> bid, delta <span class="keyword">in</span> sorted_res:
+        sign = <span class="string">"+"</span> <span class="keyword">if</span> delta >= 0 <span class="keyword">else</span> <span class="string">""</span>
+        kind = <span class="string">"win"</span> <span class="keyword">if</span> delta > 0 <span class="keyword">else</span> <span class="string">"err"</span> <span class="keyword">if</span> delta &lt; 0 <span class="keyword">else</span> <span class="string">"dim"</span>
+        emit(f<span class="string">"  {bid:22s} {sign}{delta:,}"</span>, kind)
+
+    state[<span class="string">"hands"</span>] = result.get(<span class="string">"hands"</span>, [])
+
+    <span class="keyword">return</span> jsonify({
+        <span class="string">"standings"</span>: new_standings,
+        <span class="string">"hands"</span>: result.get(<span class="string">"hands"</span>, []),
+    })
+
+
+@app.route(<span class="string">"/run/tournament"</span>, methods=[<span class="string">"POST"</span>])
+<span class="keyword">def</span> run_tournament():
+    <span class="comment">"""Run a 3-round Swiss tournament across all bots."""</span>
+    bot_list = [{<span class="string">"bot_id"</span>: bid, <span class="string">"bot_path"</span>: path, <span class="string">"cumulative_delta"</span>: 0, <span class="string">"matches_played"</span>: 0}
+                <span class="keyword">for</span> bid, path <span class="keyword">in</span> BOT_PATHS.items()]
+
+    state[<span class="string">"standings"</span>] = []
+    all_results = []
+
+    <span class="keyword">for</span> rnd <span class="keyword">in</span> range(1, 4):
+        state[<span class="string">"round"</span>] = rnd
+        emit(f<span class="string">"=== ROUND {rnd} ==="</span>, <span class="string">"bold"</span>)
+
+        standings_for_pairing = compute_standings(all_results) <span class="keyword">if</span> all_results <span class="keyword">else</span> bot_list
+        tables = swiss_pairing(standings_for_pairing, table_size=min(6, len(bot_list)))
+
+        emit(f<span class="string">"  {len(tables)} table(s) this round"</span>, <span class="string">"dim"</span>)
+
+        <span class="keyword">for</span> t_idx, table <span class="keyword">in</span> enumerate(tables):
+            bot_paths_for_match = {b[<span class="string">"bot_id"</span>]: b[<span class="string">"bot_path"</span>] <span class="keyword">for</span> b <span class="keyword">in</span> table}
+            match_id = f<span class="string">"t_r{rnd}_t{t_idx}"</span>
+
+            emit(f<span class="string">"  Table {t_idx+1}: {', '.join(bot_paths_for_match.keys())}"</span>, <span class="string">"dim"</span>)
+
+            result = run_match(match_id, bot_paths_for_match, n_hands=150)
+
+            <span class="keyword">for</span> bid, delta <span class="keyword">in</span> result[<span class="string">"chip_delta"</span>].items():
+                all_results.append({
+                    <span class="string">"bot_id"</span>: bid,
+                    <span class="string">"bot_path"</span>: BOT_PATHS.get(bid, <span class="string">""</span>),
+                    <span class="string">"chip_delta"</span>: delta,
+                })
+                sign = <span class="string">"+"</span> <span class="keyword">if</span> delta >= 0 <span class="keyword">else</span> <span class="string">""</span>
+                kind = <span class="string">"win"</span> <span class="keyword">if</span> delta > 0 <span class="keyword">else</span> <span class="string">"err"</span> <span class="keyword">if</span> delta &lt; 0 <span class="keyword">else</span> <span class="string">"dim"</span>
+                emit(f<span class="string">"    {bid:22s} {sign}{delta:,}"</span>, kind)
+
+    final_standings = compute_standings(all_results)
+    state[<span class="string">"standings"</span>] = final_standings
+
+    finalists = select_finalists(final_standings, n=3)
+    emit(<span class="string">"=== FINALISTS ==="</span>, <span class="string">"bold"</span>)
+    <span class="keyword">for</span> i, f <span class="keyword">in</span> enumerate(finalists):
+        emit(f<span class="string">"  #{i+1} {f['bot_id']}  ({f['cumulative_delta']:+,})"</span>, <span class="string">"win"</span>)
+
+    <span class="keyword">return</span> jsonify({
+        <span class="string">"standings"</span>: final_standings,
+        <span class="string">"round"</span>: 3,
+        <span class="string">"finalists"</span>: len(finalists),
+        <span class="string">"hands"</span>: state.get(<span class="string">"hands"</span>, []),
+    })
+
+
+<span class="comment"># ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------</span>
+
+<span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:
+    print(<span class="string">"\n" + "="*50</span>)
+    print(<span class="string">"  E[X] SHOWDOWN — LOCAL DEMO"</span>)
+    print(<span class="string">"="*50</span>)
+    port = int(os.environ.get(<span class="string">"DEMO_PORT"</span>, <span class="string">"5001"</span>))
+    print(f<span class="string">"  Open:  http://localhost:{port}"</span>)
+    print(<span class="string">"  Bots:  "</span>, <span class="string">", "</span>.join(BOT_PATHS.keys()))
+    print(<span class="string">"="*50 + "\n"</span>)
+    app.run(debug=<span class="keyword">False</span>, threaded=<span class="keyword">True</span>, port=port)
+</div>
+</details>
+
+<p style="margin-top:12px">To run it locally: <code>python demo.py</code> then open <code>http://localhost:5001</code>. You'll see a terminal-style UI where you can run single matches or a full 3-round Swiss tournament between the built-in bots.</p>
+
+<h2>Timeline</h2>
+<p>Dates to be announced. Follow our Instagram and join the mailing list to stay updated.</p>
+
+<h2>Contact</h2>
+<p>Questions? Reach out at <a href="mailto:contactoracleneu@gmail.com">contactoracleneu@gmail.com</a> or DM us on Instagram.</p>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <span>E[X] Showdown &middot; Northeastern University &middot; Boston, MA</span>
+  <span>&copy; E[X] | 2026</span>
+</footer>
+
+</body>
+</html>

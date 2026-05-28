@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E[X] Showdown — Algorithmic Poker Tournament</title>
+<meta name="description" content="Northeastern's first algorithmic poker bot tournament. Write a Python bot, compete against other students' algorithms. Built by E[X] Prediction Markets.">
+<meta property="og:title" content="E[X] Showdown — Algorithmic Poker Tournament">
+<meta property="og:description" content="Write a Python bot. Compete against Northeastern's sharpest minds. E[X] Prediction Markets Club.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230a0a0a' width='100' height='100' rx='4'/><text x='50' y='68' font-size='32' fill='%2300ff41' text-anchor='middle' font-family='monospace' font-weight='bold'>E[X]</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0a0a0a;
+  --bg-panel:#0f0f0f;
+  --bg-card:#111;
+  --border:#1a2e1a;
+  --border-active:#00ff41;
+  --green:#00ff41;
+  --green-dim:#00cc33;
+  --green-muted:#3a6e3a;
+  --green-dark:#1a2e1a;
+  --fg:#c8c8c8;
+  --fg-dim:#888;
+  --white:#fff;
+  --red:#ff4444;
+  --cyan:#00ffcc;
+  --amber:#ffc107;
+  --mono:'Share Tech Mono','Courier New',monospace;
+  --max:960px;
+}
+
+html{font-size:16px;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--mono);line-height:1.6}
+a{color:var(--green);text-decoration:none;transition:color 0.15s}
+a:hover{color:var(--cyan)}
+::selection{background:var(--green);color:#000}
+
+/* Green gradient sweep — fullhouse-style */
+.gradient-sweep{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.gradient-sweep::before{content:'';position:absolute;width:100%;height:50%;background:linear-gradient(180deg,transparent 0%,rgba(0,255,65,0.07) 50%,transparent 100%);opacity:0.8;animation:sweep 6s ease-in-out infinite}
+@keyframes sweep{0%{transform:translateY(-100%)}50%{transform:translateY(100vh)}100%{transform:translateY(-100%)}}
+
+/* Scanline overlay */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.04) 2px,rgba(0,0,0,0.04) 4px);opacity:0.5}
+
+/* Nav */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:var(--max);margin:0 auto}
+.nav-logo{font-size:16px;color:var(--green);font-weight:400;letter-spacing:1px}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}
+.nav-links a{font-size:13px;color:var(--fg-dim);letter-spacing:1px;transition:color 0.15s}
+.nav-links a:hover{color:var(--green)}
+.nav-links .icon{font-size:12px;margin-right:4px}
+.status-pill{font-size:11px;letter-spacing:2px;padding:4px 12px;border:1px solid var(--green);color:var(--green);display:inline-flex;align-items:center;gap:6px}
+.status-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* Blink cursor */
+.blink{animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* Hero / ASCII Banner */
+.hero{max-width:var(--max);margin:0 auto;padding:60px 24px 40px;text-align:center}
+.ascii-box{border:1px solid var(--green);padding:32px 24px 20px;display:inline-block;margin-bottom:24px;position:relative}
+.ascii-art{font-size:clamp(10px,2.5vw,16px);color:var(--green);line-height:1.2;letter-spacing:2px;white-space:pre}
+.ascii-sub{color:var(--green-dim);font-size:13px;letter-spacing:3px;margin-top:16px}
+
+/* Init block */
+.init-section{max-width:var(--max);margin:0 auto;padding:0 24px 48px;display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
+.init-text{flex:1;min-width:300px}
+.init-line{color:var(--green);font-size:13px;margin-bottom:20px;animation:typeIn 0.5s ease}
+.init-detail{font-size:14px;color:var(--fg);margin-bottom:6px}
+.init-detail .label{color:var(--green-muted);display:inline-block;width:140px}
+.init-img{width:200px;height:200px;border:1px solid var(--green-dark);background:var(--bg-panel);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.init-img-placeholder{color:var(--green-muted);font-size:11px;text-align:center;letter-spacing:1px;text-transform:uppercase}
+
+/* Stats */
+.stats-row{max-width:var(--max);margin:0 auto;padding:0 24px 48px;display:flex;gap:1px;background:var(--border)}
+.stat-card{flex:1;background:var(--bg);padding:20px;text-align:center}
+.stat-value{font-size:28px;color:var(--green);font-weight:400;margin-bottom:4px}
+.stat-label{font-size:10px;color:var(--green-muted);letter-spacing:2px;text-transform:uppercase}
+
+/* Description */
+.desc-section{max-width:var(--max);margin:0 auto;padding:0 24px 48px}
+.desc-text{font-size:14px;color:var(--fg);line-height:1.8;max-width:700px}
+
+/* Why Compete */
+.why-section{max-width:var(--max);margin:0 auto;padding:0 24px 48px}
+.section-heading{color:var(--green);font-size:16px;font-weight:400;margin-bottom:16px;letter-spacing:1px}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:var(--border)}
+.why-card{background:var(--bg);padding:24px}
+.why-card h3{color:var(--green);font-size:13px;font-weight:400;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.why-card p{font-size:13px;color:var(--fg-dim);line-height:1.7}
+
+/* How it works */
+.how-section{max-width:var(--max);margin:0 auto;padding:0 24px 48px}
+.steps{display:flex;gap:1px;background:var(--border)}
+.step{flex:1;background:var(--bg);padding:24px;min-width:200px}
+.step-num{font-size:32px;color:var(--green);margin-bottom:8px}
+.step h3{font-size:13px;color:var(--white);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;font-weight:400}
+.step p{font-size:12px;color:var(--fg-dim);line-height:1.7}
+
+/* CTA */
+.cta-section{max-width:var(--max);margin:0 auto;padding:0 24px 64px;text-align:center}
+.cta-box{border:1px solid var(--border);padding:40px 24px;background:var(--bg-panel)}
+.cta-box h2{color:var(--white);font-size:18px;font-weight:400;margin-bottom:8px;letter-spacing:1px}
+.cta-box p{color:var(--fg-dim);font-size:13px;margin-bottom:24px}
+.btn{font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:10px 28px;border:1px solid;cursor:pointer;transition:all 0.15s;text-decoration:none;display:inline-block;margin:0 6px}
+.btn-green{background:var(--green);border-color:var(--green);color:#000}
+.btn-green:hover{background:var(--green-dim);border-color:var(--green-dim);color:#000}
+.btn-outline{background:transparent;border-color:var(--green-muted);color:var(--fg-dim)}
+.btn-outline:hover{border-color:var(--green);color:var(--green)}
+
+/* Footer */
+footer{border-top:1px solid var(--border);max-width:var(--max);margin:0 auto;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+footer span{font-size:11px;color:var(--green-muted)}
+.footer-links{display:flex;gap:16px}
+.footer-links a{font-size:11px;color:var(--green-muted);letter-spacing:1px;text-transform:uppercase;transition:color 0.15s}
+.footer-links a:hover{color:var(--green)}
+
+/* Mobile */
+@media(max-width:640px){
+  .nav{flex-wrap:wrap;gap:12px}
+  .init-section{flex-direction:column}
+  .init-img{display:none}
+  .stats-row{flex-direction:column}
+  .steps{flex-direction:column}
+  .why-grid{grid-template-columns:1fr}
+  .ascii-art{font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){
+  .status-dot{animation:none}
+  .blink{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Green gradient sweep -->
+<div class="gradient-sweep"></div>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">>. e[x].showdown:~$<span class="blink">_</span></a>
+  <ul class="nav-links">
+    <li><a href="about.html"><span class="icon">&#9776;</span> Info</a></li>
+    <li><a href="https://forms.gle/FvVqxmq3Qm2QcJ2W9" target="_blank" rel="noopener"><span class="icon">&#9998;</span> Register</a></li>
+    <li><span class="status-pill"><span class="status-dot"></span>Registration open</span></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="ascii-box">
+<pre class="ascii-art">
+ ███████╗ ██╗██╗  ██╗██╗
+ ██╔════╝ ██║╚██╗██╔╝╝██║
+ █████╗   ██║ ╚███╔╝  ██║
+ ██╔══╝   ██║ ██╔██╗  ██║
+ ███████╗ ██║██╔╝ ██╗██║
+ ╚══════╝ ╚═╝╚═╝  ╚═╝╚═╝
+ ███████╗██╗  ██╗ ██████╗ ██╗    ██╗██████╗  ██████╗ ██╗    ██╗███╗   ██╗
+ ██╔════╝██║  ██║██╔═══██╗██║    ██║██╔══██╗██╔═══██╗██║    ██║████╗  ██║
+ ███████╗███████║██║   ██║██║ █╗ ██║██║  ██║██║   ██║██║ █╗ ██║██╔██╗ ██║
+ ╚════██║██╔══██║██║   ██║██║███╗██║██║  ██║██║   ██║██║███╗██║██║╚██╗██║
+ ███████║██║  ██║╚██████╔╝╚███╔███╔╝██████╔╝╚██████╔╝╚███╔███╔╝██║ ╚████║
+ ╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═════╝  ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═══╝
+</pre>
+    <div class="ascii-sub">Northeastern Prediction Markets Club</div>
+  </div>
+</section>
+
+<!-- Init -->
+<section class="init-section">
+  <div class="init-text">
+    <div class="init-line">initialising tournament engine...</div>
+    <div class="init-detail"><span class="label">Event:</span> E[X] Showdown</div>
+    <div class="init-detail"><span class="label">Format:</span> Online &middot; Algorithmic</div>
+    <div class="init-detail"><span class="label">Built by:</span> E[X] &mdash; Northeastern Prediction Markets</div>
+    <div class="init-detail"><span class="label">Eligibility:</span> Northeastern students (all majors)</div>
+  </div>
+  <div class="init-img">
+    <div class="init-img-placeholder">&#9824; &#9829; &#9830; &#9827;<br><br>algorithmic<br>poker</div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-value">1,326</div>
+    <div class="stat-label">Hold'em Starting Combos</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">3</div>
+    <div class="stat-label">Tournament Stages</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">Python</div>
+    <div class="stat-label">One Language. One Function.</div>
+  </div>
+</div>
+
+<!-- Description -->
+<section class="desc-section">
+  <p class="desc-text">
+    E[X] Showdown is Northeastern's first algorithmic poker tournament. Write a Python bot that plays No-Limit Texas Hold'em. No manual play &mdash; your code makes every decision. Compete against other students' algorithms in automated matches. Build your bot. Beat everyone else's.
+  </p>
+</section>
+
+<!-- Why Compete -->
+<section class="why-section">
+  <h2 class="section-heading">// Why Compete?</h2>
+  <div class="why-grid">
+    <div class="why-card">
+      <h3>Game Theory in Practice</h3>
+      <p>Poker is incomplete information. Your bot has to make decisions under uncertainty &mdash; the same skill that drives prediction markets, trading, and research.</p>
+    </div>
+    <div class="why-card">
+      <h3>Build Something Real</h3>
+      <p>Not a class project. Not a tutorial. A bot that competes head-to-head against other students' code. Ship it, test it, watch it play.</p>
+    </div>
+    <div class="why-card">
+      <h3>All Majors Welcome</h3>
+      <p>CS, finance, math, polisci, philosophy &mdash; good judgment doesn't require a specific major. Some of the best bots come from people who've never played a hand.</p>
+    </div>
+    <div class="why-card">
+      <h3>Sharpen Your Edge</h3>
+      <p>The firms that recruit from competitions like this are the same ones hiring for quant, SWE, and research roles. This is how you stand out when everyone has the same GPA.</p>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="how-section">
+  <h2 class="section-heading">// How It Works</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Submit Your Bot</h3>
+      <p>Write a <code>decide()</code> function in Python. It receives the game state, returns an action. That's the entire interface. Submit a single <code>bot.py</code> file.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Qualify</h3>
+      <p>All bots play in a Swiss-system tournament. Multiple rounds, 400 hands per match, 6-bot tables. Bots are ranked by cumulative chip delta. Top performers advance.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Finals</h3>
+      <p>The best bots compete in a bracket. Best algorithm wins. Results are streamed live so everyone can watch the action.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-box">
+    <h2>The future is a market. Learn to price it.</h2>
+    <p>Register now and start building your bot. The engine repo has everything you need.</p>
+    <a class="btn btn-green" href="https://forms.gle/FvVqxmq3Qm2QcJ2W9" target="_blank" rel="noopener">Register &rarr;</a>
+    <a class="btn btn-outline" href="about.html">Learn More</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <span>v1.0.0 &nbsp; <a href="mailto:contactoracleneu@gmail.com">contactoracleneu@gmail.com</a></span>
+  <span>&copy; E[X] | 2026</span>
+</footer>
+
+</body>
+</html>
