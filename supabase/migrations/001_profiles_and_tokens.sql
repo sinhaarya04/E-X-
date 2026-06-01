@@ -72,30 +72,38 @@ CREATE POLICY "Users can view own profile"
   USING ((SELECT auth.uid()) = id);
 
 -- Users can update their own display_name and avatar_url only
--- Balance and role changes must go through server-side functions (SECURITY DEFINER)
+-- Balance and role changes are protected by a BEFORE UPDATE trigger (added below)
 CREATE POLICY "Users can update own profile"
   ON public.profiles
   FOR UPDATE
   USING ((SELECT auth.uid()) = id)
-  WITH CHECK (
-    (SELECT auth.uid()) = id AND
-    husky_balance = (SELECT husky_balance FROM public.profiles WHERE id = auth.uid()) AND
-    role = (SELECT role FROM public.profiles WHERE id = auth.uid())
-  );
+  WITH CHECK ((SELECT auth.uid()) = id);
 
--- Admins can read all profiles
-CREATE POLICY "Admins can view all profiles"
-  ON public.profiles
-  FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles
-      WHERE id = (SELECT auth.uid()) AND role = 'admin'
-    )
-  );
+-- Admins can read all profiles (admin check will be added in PR 4 via JWT app_metadata)
+-- For now, users can only read their own profile via the policy above
+-- Service role (Edge Functions) can read all via the service role policy below
 
 -- Service role can do anything (used by Edge Functions)
 CREATE POLICY "Service role full access"
   ON public.profiles
   USING (auth.role() = 'service_role')
   WITH CHECK (auth.role() = 'service_role');
+
+-- ── Protect balance and role from direct user modification ──
+CREATE OR REPLACE FUNCTION public.protect_profile_fields()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  -- Only service_role can modify these fields
+  IF current_setting('request.jwt.claim.role', true) != 'service_role' THEN
+    NEW.husky_balance := OLD.husky_balance;
+    NEW.role := OLD.role;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER protect_profile_fields
+  BEFORE UPDATE ON public.profiles
+  FOR EACH ROW EXECUTE FUNCTION public.protect_profile_fields();
