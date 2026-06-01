@@ -16,11 +16,9 @@ export default function JoinCTA() {
         <div className="join-buttons">
           <a
             className="btn btn-primary"
-            href="https://forms.gle/FvVqxmq3Qm2QcJ2W9"
-            target="_blank"
-            rel="noopener"
+            href="/signup"
           >
-            Apply &rarr;
+            Sign Up &rarr;
           </a>
           <a className="btn btn-outline" href="readings.zip" download>
             Papers &darr;
