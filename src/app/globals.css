@@ -208,6 +208,8 @@ body::after {
 .nav-cta:hover{background:var(--orange-dim)!important}
 .nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:4px}
 .nav-toggle span{display:block;width:20px;height:1.5px;background:var(--orange);transition:transform 0.3s,opacity 0.3s}
+.nav-links-a{font-family:var(--mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--fg-dim);transition:color 0.15s;padding:4px 0;border-bottom:1px solid transparent}
+.nav-links-a:hover{color:var(--orange);border-bottom-color:var(--orange)}
 .nav-time{font-size:11px;color:var(--fg-muted);margin-left:12px}
 
 /* ── Section Utilities ── */
@@ -316,6 +318,40 @@ footer span{font-size:10px;color:var(--fg-muted)}
   .reveal{opacity:1;transform:none;transition:none}
   .ticker-track{animation:none}
 }
+
+/* ═══════════════════════════════════════════════════
+   AUTH PAGES
+   ═══════════════════════════════════════════════════ */
+.auth-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--bg)}
+.auth-shell{width:100%;max-width:400px}
+.auth-header{text-align:center;margin-bottom:40px}
+.auth-logo{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--orange);letter-spacing:-0.03em;text-decoration:none}
+.auth-tagline{font-family:var(--mono);font-size:11px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.08em;margin-top:6px}
+.auth-form{background:var(--bg-panel);border:1px solid var(--lp-border);padding:32px}
+.auth-title{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--fg);margin-bottom:4px}
+.auth-subtitle{font-family:var(--sans);font-size:12px;color:var(--fg-muted);margin-bottom:24px}
+.auth-error{font-family:var(--sans);font-size:12px;color:var(--red);border:1px solid var(--red);padding:8px 12px;margin-bottom:16px;background:rgba(255,23,68,0.05)}
+.auth-field{margin-bottom:16px}
+.auth-label{display:block;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--fg-muted);margin-bottom:6px}
+.auth-input{width:100%;background:var(--bg);border:1px solid var(--lp-border);color:var(--fg);font-family:var(--mono);font-size:13px;padding:8px 12px;outline:none;transition:border-color 0.15s}
+.auth-input:focus{border-color:var(--orange)}
+.auth-input::placeholder{color:var(--fg-muted)}
+.auth-btn{display:block;width:100%;background:var(--orange);color:#000;font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;padding:10px 24px;border:none;cursor:pointer;transition:background 0.15s;margin-top:24px;text-decoration:none}
+.auth-btn:hover{background:var(--orange-dim)}
+.auth-btn:disabled{opacity:0.6;cursor:not-allowed}
+.auth-switch{font-family:var(--sans);font-size:12px;color:var(--fg-muted);text-align:center;margin-top:16px}
+.auth-link{color:var(--orange);text-decoration:none}
+.auth-link:hover{text-decoration:underline}
+.auth-confirm{text-align:center;padding:8px 0}
+.auth-confirm-icon{font-size:32px;color:var(--green);margin-bottom:16px}
+.auth-confirm-text{font-family:var(--sans);font-size:13px;color:var(--fg-dim);line-height:1.6;margin-top:8px}
+
+/* ═══════════════════════════════════════════════════
+   PLATFORM SHELL (PR 3 will expand this)
+   ═══════════════════════════════════════════════════ */
+.platform-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg)}
+.platform-placeholder{font-family:var(--mono);font-size:13px;color:var(--fg-muted);text-align:center}
+.platform-placeholder strong{color:var(--orange)}
 
 /* ── shadcn base layer (kept for future platform components) ── */
 @layer base {

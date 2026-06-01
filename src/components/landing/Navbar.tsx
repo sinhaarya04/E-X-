@@ -75,8 +75,13 @@ export default function Navbar() {
           <span className="nav-time">{time}</span>
         </li>
         <li>
-          <a href="#join" className="nav-cta" onClick={closeMenu}>
-            Join Us
+          <a href="/login" className="nav-links-a" onClick={closeMenu}>
+            Log in
+          </a>
+        </li>
+        <li>
+          <a href="/signup" className="nav-cta" onClick={closeMenu}>
+            Sign Up
           </a>
         </li>
       </ul>
