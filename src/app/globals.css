@@ -1,0 +1,325 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── Bloomberg Terminal Design Tokens ── */
+@theme inline {
+  --color-bg: #000000;
+  --color-bg-panel: #0c0c0c;
+  --color-bg-cell: #111111;
+  --color-bg-hover: #1a1a1a;
+
+  --color-border: #1c1c1c;
+  --color-border-active: #333333;
+
+  --color-fg: #e8e6e3;
+  --color-fg-dim: #777777;
+  --color-fg-muted: #444444;
+
+  --color-orange: #f77f00;
+  --color-orange-dim: #b35900;
+
+  --color-green: #00c853;
+  --color-red: #ff1744;
+  --color-amber: #ffc107;
+  --color-cyan: #00bcd4;
+
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-heading: var(--font-jetbrains-mono);
+
+  /* shadcn theme vars */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* ── Bloomberg Terminal Theme (dark-only, no light mode) ── */
+:root {
+  --background: #000000;
+  --foreground: #e8e6e3;
+  --card: #0c0c0c;
+  --card-foreground: #e8e6e3;
+  --popover: #0c0c0c;
+  --popover-foreground: #e8e6e3;
+  --primary: #f77f00;
+  --primary-foreground: #000000;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #e8e6e3;
+  --muted: #111111;
+  --muted-foreground: #777777;
+  --accent: #1a1a1a;
+  --accent-foreground: #e8e6e3;
+  --destructive: #ff1744;
+  --border: #1c1c1c;
+  --input: #1c1c1c;
+  --ring: #f77f00;
+  --chart-1: #f77f00;
+  --chart-2: #00c853;
+  --chart-3: #ff1744;
+  --chart-4: #ffc107;
+  --chart-5: #00bcd4;
+  --radius: 0.25rem;
+  --sidebar: #0c0c0c;
+  --sidebar-foreground: #e8e6e3;
+  --sidebar-primary: #f77f00;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #e8e6e3;
+  --sidebar-border: #1c1c1c;
+  --sidebar-ring: #f77f00;
+
+  /* ── Landing page design tokens (match index.html exactly) ── */
+  --bg: #000;
+  --bg-panel: #0c0c0c;
+  --bg-cell: #111;
+  --bg-hover: #1a1a1a;
+  --lp-border: #1c1c1c;
+  --border-active: #333;
+  --fg: #e8e6e3;
+  --fg-dim: #777;
+  --fg-muted: #444;
+  --orange: #f77f00;
+  --orange-dim: #b35900;
+  --green: #00c853;
+  --red: #ff1744;
+  --amber: #ffc107;
+  --cyan: #00bcd4;
+  --mono: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
+  --sans: var(--font-inter), 'Inter', system-ui, sans-serif;
+  --max: 1100px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --space-6: 64px;
+  --space-7: 100px;
+}
+
+/* ── Base Styles ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--fg);
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--orange);
+  color: #000;
+}
+
+/* ── CRT Scanline Overlay ── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  opacity: 0.4;
+}
+
+/* ═══════════════════════════════════════════════════
+   LANDING PAGE STYLES — exact copy from index.html
+   ═══════════════════════════════════════════════════ */
+
+/* ── Top Ticker Bar ── */
+.ticker-bar{background:var(--bg-panel);border-bottom:1px solid var(--lp-border);overflow:hidden;white-space:nowrap;padding:6px 0}
+.ticker-track{display:inline-flex;gap:32px;animation:scroll-left 30s linear infinite;padding-left:100%}
+.ticker-item{font-family:var(--mono);font-size:11px;color:var(--fg-dim);display:inline-flex;align-items:center;gap:6px;flex-shrink:0}
+.ticker-item .t-sym{color:var(--orange);font-weight:600}
+.ticker-item .t-up{color:var(--green)}
+.ticker-item .t-down{color:var(--red)}
+@keyframes scroll-left{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+
+/* ── Navigation ── */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;max-width:var(--max);margin:0 auto;border-bottom:1px solid var(--lp-border)}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--orange);letter-spacing:-0.02em}
+.nav-logo span{color:var(--fg-dim);font-weight:400;font-size:13px;margin-left:4px}
+.nav-links{display:flex;align-items:center;gap:20px;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--fg-dim);transition:color 0.15s;padding:4px 0;border-bottom:1px solid transparent}
+.nav-links a:hover{color:var(--orange);border-bottom-color:var(--orange)}
+.nav-cta{background:var(--orange)!important;color:#000!important;padding:6px 16px!important;font-weight:600!important;border:none!important;transition:background 0.15s!important}
+.nav-cta:hover{background:var(--orange-dim)!important}
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:4px}
+.nav-toggle span{display:block;width:20px;height:1.5px;background:var(--orange);transition:transform 0.3s,opacity 0.3s}
+.nav-time{font-size:11px;color:var(--fg-muted);margin-left:12px}
+
+/* ── Section Utilities ── */
+.section-label{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--orange);display:flex;align-items:center;gap:8px}
+.section-label::before{content:'';width:8px;height:1px;background:var(--orange)}
+.section-title{font-family:var(--mono);font-size:clamp(1rem,2vw,1.2rem);font-weight:600;color:var(--fg);margin-top:var(--space-1);text-transform:uppercase;letter-spacing:0.04em}
+
+/* ── Reveal Animations ── */
+.reveal{opacity:0;transform:translateY(12px);transition:opacity 0.5s ease,transform 0.5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:0.08s}
+.reveal-d2{transition-delay:0.16s}
+.reveal-d3{transition-delay:0.24s}
+.reveal-d4{transition-delay:0.32s}
+
+/* ── Hero ── */
+.hero{max-width:var(--max);margin:0 auto;padding:var(--space-7) 24px var(--space-6)}
+.hero-top{display:flex;align-items:center;gap:12px;margin-bottom:var(--space-4)}
+.hero-status{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--amber);border:1px solid var(--amber);padding:3px 10px}
+.hero-status .pulse{width:5px;height:5px;background:var(--amber);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.hero h1{font-family:var(--mono);font-size:clamp(2rem,5vw,3.2rem);font-weight:700;line-height:1.1;letter-spacing:-0.03em;margin-bottom:var(--space-3);color:var(--fg)}
+.hero h1 .highlight{color:var(--orange)}
+.hero-sub{font-family:var(--sans);font-size:15px;color:var(--fg-dim);max-width:520px;line-height:1.65}
+.hero-stats{display:flex;gap:var(--space-5);margin-top:var(--space-5);padding-top:var(--space-4);border-top:1px solid var(--lp-border)}
+.hero-stat-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg-muted);margin-bottom:2px}
+.hero-stat-value{font-size:20px;font-weight:700;color:var(--orange)}
+.hero-stat-value .unit{font-size:12px;font-weight:400;color:var(--fg-dim);margin-left:2px}
+
+/* ── Markets Board ── */
+.markets-section{max-width:var(--max);margin:0 auto;padding:0 24px var(--space-6)}
+.markets-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:var(--space-3)}
+.markets-note{font-size:10px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.06em}
+.markets-shell{background:var(--bg-panel);border:1px solid var(--lp-border);overflow:hidden}
+.markets-header-row{display:grid;grid-template-columns:1fr 100px 60px 50px;gap:8px;padding:8px 16px;border-bottom:1px solid var(--lp-border);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-muted)}
+.market-row{display:grid;grid-template-columns:1fr 100px 60px 50px;gap:8px;align-items:center;padding:10px 16px;border-bottom:1px solid #0f0f0f;transition:background 0.1s;cursor:default}
+.market-row:last-child{border-bottom:none}
+.market-row:hover{background:var(--bg-hover)}
+.market-q{font-size:12.5px;color:var(--fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.market-bar{height:3px;background:#1a1a1a;position:relative;overflow:hidden}
+.market-bar-fill{height:100%;position:absolute;left:0;top:0;transition:width 0.5s ease,background 0.5s ease}
+.market-price{font-size:13px;font-weight:600;text-align:right}
+.market-delta{font-size:10px;text-align:right;transition:opacity 0.35s ease;font-weight:500}
+.delta-up{color:var(--green)}.delta-down{color:var(--red)}
+
+/* ── Pillars ── */
+.pillars-section{max-width:var(--max);margin:0 auto;padding:var(--space-6) 24px}
+.pillars-head{margin-bottom:var(--space-4)}
+.pillars-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--lp-border)}
+.pillar-card{background:var(--bg-panel);padding:var(--space-4);transition:background 0.15s}
+.pillar-card:hover{background:var(--bg-hover)}
+.pillar-num{font-size:10px;color:var(--orange);letter-spacing:0.1em;margin-bottom:var(--space-2)}
+.pillar-card h3{font-size:14px;font-weight:600;margin-bottom:var(--space-1);text-transform:uppercase;letter-spacing:0.02em}
+.pillar-card p{font-family:var(--sans);font-size:12.5px;color:var(--fg-dim);line-height:1.6}
+
+/* ── Sponsors ── */
+.sponsors-section{max-width:var(--max);margin:0 auto;padding:var(--space-6) 24px}
+.sponsors-head{margin-bottom:var(--space-4)}
+.sponsors-note{font-family:var(--sans);font-size:13px;color:var(--fg-dim);margin-top:var(--space-3);max-width:520px;line-height:1.65}
+.sponsor-cta{text-align:center}
+
+/* ── Join CTA ── */
+.join-section{max-width:var(--max);margin:0 auto;padding:var(--space-7) 24px}
+.join-inner{border:1px solid var(--lp-border);background:var(--bg-panel);padding:var(--space-6) var(--space-5);text-align:center}
+.join-inner h2{font-family:var(--mono);font-size:clamp(1.3rem,3.5vw,2rem);font-weight:700;margin-bottom:var(--space-2);line-height:1.2;letter-spacing:-0.01em}
+.join-inner h2 .highlight{color:var(--orange)}
+.join-inner .subtitle{font-family:var(--sans);color:var(--fg-dim);font-size:13px;margin-bottom:var(--space-5)}
+.join-buttons{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;padding:10px 24px;border:1px solid;cursor:pointer;transition:all 0.15s;text-decoration:none;display:inline-block}
+.btn-primary{background:var(--orange);border-color:var(--orange);color:#000;font-weight:600}
+.btn-primary:hover{background:var(--orange-dim);border-color:var(--orange-dim)}
+.btn-outline{background:transparent;border-color:var(--border-active);color:var(--fg-dim)}
+.btn-outline:hover{border-color:var(--orange);color:var(--orange)}
+
+/* ── Footer ── */
+footer{border-top:1px solid var(--lp-border);max-width:var(--max);margin:0 auto;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+footer span{font-size:10px;color:var(--fg-muted)}
+.footer-links{display:flex;gap:16px}
+.footer-links a{font-size:10px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.06em;transition:color 0.15s}
+.footer-links a:hover{color:var(--orange)}
+.disclaimer{font-size:9px;color:var(--fg-muted);max-width:var(--max);margin:0 auto;padding:0 24px 20px;text-align:center}
+
+/* ── Mobile ── */
+@media(max-width:768px){
+  .nav-toggle{display:flex}
+  .nav-links{position:fixed;top:0;right:0;bottom:0;width:260px;background:var(--bg);flex-direction:column;padding:80px 24px 32px;gap:16px;transform:translateX(100%);transition:transform 0.3s ease;z-index:100;border-left:1px solid var(--lp-border)}
+  .nav-links.open{transform:translateX(0)}
+  .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99}
+  .nav-overlay.open{display:block}
+  .nav-time{display:none}
+  .hero{padding:var(--space-6) 24px var(--space-5)}
+  .hero-stats{flex-wrap:wrap;gap:var(--space-4)}
+  .markets-header-row,.market-row{grid-template-columns:1fr 60px 50px;gap:6px}
+  .markets-header-row .col-bar,.market-bar{display:none}
+  .market-row{padding:9px 12px}
+  .market-q{font-size:11.5px}
+  .pillars-grid{grid-template-columns:1fr}
+  .join-inner{padding:var(--space-5) var(--space-4)}
+  .ticker-bar{display:none}
+}
+
+/* ── Reduced Motion ── */
+@media(prefers-reduced-motion:reduce){
+  .pulse{animation:none}
+  .market-bar-fill{transition:none}
+  .reveal{opacity:1;transform:none;transition:none}
+  .ticker-track{animation:none}
+}
+
+/* ── shadcn base layer (kept for future platform components) ── */
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}

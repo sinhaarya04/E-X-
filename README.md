@@ -1,32 +1,64 @@
-# Northeastern Prediction Markets Club — Landing Page
+# E[X] — Northeastern Prediction Markets
 
-Pre-launch teaser page for the Northeastern Prediction Markets Club (Fall 2026).
+A Kalshi-style prediction markets platform for Northeastern University. Students sign up with their NEU email, receive 1,000 Husky Tokens, and can create and bet on markets about campus life, politics, tech, sports, and more.
 
-## Run locally
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router, React 19)
+- **Styling:** Tailwind CSS v4, shadcn/ui
+- **Backend:** Supabase (Postgres, Auth, Realtime, Edge Functions)
+- **Market Engine:** LMSR (Logarithmic Market Scoring Rule) AMM
+- **Fonts:** JetBrains Mono + Inter
+- **Theme:** Bloomberg Terminal-inspired dark UI
+
+## Getting Started
+
+```bash
+cd E-X-
+npm install
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to see the landing page.
+
+## Project Structure
 
 ```
-open index.html
-# or
-python3 -m http.server 8000
+src/
+├── app/
+│   ├── layout.tsx          # Root layout (fonts, metadata)
+│   └── page.tsx            # Landing page (composes all landing components)
+├── components/
+│   ├── landing/            # Landing page components
+│   │   ├── TickerBar.tsx   # Scrolling market ticker
+│   │   ├── Navbar.tsx      # Navigation with live clock + mobile menu
+│   │   ├── Hero.tsx        # Hero section with status + stats
+│   │   ├── MarketBoard.tsx # Live simulated markets with ticking prices
+│   │   ├── Pillars.tsx     # "Four Desks" — what the club does
+│   │   ├── Sponsors.tsx    # Sponsor CTA
+│   │   ├── JoinCTA.tsx     # Join section with apply/social links
+│   │   ├── Footer.tsx      # Footer + disclaimer
+│   │   └── ScrollReveal.tsx# IntersectionObserver scroll animations
+│   └── ui/                 # shadcn primitives
+└── lib/
+    └── utils.ts
 ```
 
-## Deploy
+## PR Roadmap
 
-Drop `index.html` on **Vercel**, **Netlify**, or **GitHub Pages**. No build step needed.
+| PR | Branch | Status | Scope |
+|----|--------|--------|-------|
+| 1 | `feat/project-scaffold` | In Progress | Next.js scaffold + landing page |
+| 2 | `feat/supabase-auth` | Planned | Supabase setup, NEU-only auth, Husky Tokens |
+| 3 | `feat/app-shell` | Planned | Sidebar, topbar, platform layout |
+| 4 | `feat/market-engine` | Planned | LMSR math, markets table, browse + create |
+| 5 | `feat/trading` | Planned | Place bets, trade panel, live prices |
+| 6 | `feat/portfolio` | Planned | Token balance, positions, P&L |
+| 7 | `feat/resolution` | Planned | Admin resolves markets, payouts, disputes |
+| 8 | `feat/leaderboard` | Planned | Brier score rankings |
+| 9 | `feat/polish-and-deploy` | Planned | Error handling, SEO, Vercel deploy |
 
-## Customize
+## Contact
 
-### Logo
-Replace the `.logo-mark` div in the header with the official Northeastern "N" SVG. Search for the `<!-- TODO: replace with official NU logo -->` comment.
-
-### Waitlist form
-Find the `handleWaitlist()` function in the `<script>` block. Replace the `console.log` with a `fetch()` POST to Mailchimp, ConvertKit, or Formspree.
-
-### Colors & fonts
-All design tokens are in `:root` at the top of the `<style>` block:
-- `--red` — Northeastern red (`#C8102E`)
-- `--bg` — background (`#0a0a0a`)
-- `--fg` — foreground (`#fafaf5`)
-- `--serif` — headline font (Fraunces)
-- `--sans` — body font (Inter)
-- `--mono` — numbers/labels (JetBrains Mono)
+- Email: contactoracleneu@gmail.com
+- Apply: [Google Form](https://forms.gle/FvVqxmq3Qm2QcJ2W9)
