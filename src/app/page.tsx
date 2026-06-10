@@ -1,7 +1,6 @@
 import TickerBar from "@/components/landing/TickerBar";
 import Navbar from "@/components/landing/Navbar";
 import Hero from "@/components/landing/Hero";
-import MarketBoard from "@/components/landing/MarketBoard";
 import Pillars from "@/components/landing/Pillars";
 import Sponsors from "@/components/landing/Sponsors";
 import JoinCTA from "@/components/landing/JoinCTA";
@@ -16,7 +15,6 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <MarketBoard />
         <Pillars />
         <Sponsors />
         <JoinCTA />

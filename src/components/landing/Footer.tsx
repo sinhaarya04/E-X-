@@ -4,10 +4,20 @@ export default function Footer() {
       <footer>
         <span>E[X] &middot; Boston, MA &middot; Est. 2026</span>
         <div className="footer-links">
-          <a href="#" aria-label="Instagram">
+          <a
+            href="https://www.instagram.com/northeastern_ex/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
             Instagram
           </a>
-          <a href="#" aria-label="LinkedIn">
+          <a
+            href="https://www.linkedin.com/in/northeastern-predictions-b2578b405/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+          >
             LinkedIn
           </a>
           <a href="mailto:contactoracleneu@gmail.com" aria-label="Email">

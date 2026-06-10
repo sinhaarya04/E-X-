@@ -7,6 +7,7 @@ import {
   TrendingUp,
   Wallet,
   Trophy,
+  Globe,
 } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -14,6 +15,7 @@ const NAV_ITEMS = [
   { href: "/markets", label: "Markets", icon: TrendingUp },
   { href: "/portfolio", label: "Portfolio", icon: Wallet },
   { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
+  { href: "/worldcup", label: "World Cup 2026", icon: Globe },
 ];
 
 interface SidebarProps {

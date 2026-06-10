@@ -419,6 +419,142 @@ footer span{font-size:10px;color:var(--fg-muted)}
   .dash-grid{grid-template-columns:1fr}
 }
 
+/* ═══════════════════════════════════════════════════
+   WORLD CUP 2026 PREDICTION GAME
+   ═══════════════════════════════════════════════════ */
+
+/* ── WC26 Tabs (sub-nav) ── */
+.wc26-tabs{display:flex;gap:0;border-bottom:1px solid var(--lp-border);margin-bottom:var(--space-4)}
+.wc26-tab{background:none;border:none;padding:10px 20px;font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:var(--fg-muted);cursor:pointer;position:relative;transition:color 0.15s}
+.wc26-tab:hover{color:var(--fg-dim)}
+.wc26-tab.active{color:var(--orange)}
+.wc26-tab.active::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--orange)}
+
+/* ── WC26 Rules ── */
+.wc26-rules{max-width:760px;font-family:var(--sans);font-size:13px;line-height:1.6;color:var(--fg-dim);padding-bottom:40px}
+.wc26-rules-h1{font-family:var(--mono);font-size:18px;font-weight:700;color:var(--orange);margin:0 0 10px;letter-spacing:-0.01em}
+.wc26-rules-h2{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--orange);margin:0 0 8px;text-transform:uppercase;letter-spacing:0.06em}
+.wc26-rules-lead{font-size:14px;color:var(--fg-dim);margin:0 0 22px;line-height:1.65}
+.wc26-rules-section{background:var(--bg-panel);border:1px solid var(--lp-border);padding:16px 18px;margin-bottom:12px}
+.wc26-rules-section p{margin:0 0 10px}.wc26-rules-section p:last-child{margin-bottom:0}
+.wc26-rules-list{margin:0 0 10px;padding-left:20px}.wc26-rules-list li{margin-bottom:4px}
+.wc26-rules-note{font-size:12px;color:var(--fg-dim);background:rgba(247,127,0,0.05);padding:8px 12px;margin-top:10px}
+.wc26-rules-note strong{color:var(--orange)}
+.wc26-rules-table{width:100%;border-collapse:collapse;margin:6px 0 4px;font-size:12px;font-family:var(--mono)}
+.wc26-rules-table th,.wc26-rules-table td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--lp-border);vertical-align:top}
+.wc26-rules-table th{font-size:10px;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.06em;background:var(--bg)}
+.wc26-rules-table td.num{font-variant-numeric:tabular-nums;font-weight:700;color:var(--orange);width:60px}
+
+/* ── WC26 Deadline Banner ── */
+.wc26-deadline{background:rgba(247,127,0,0.05);color:var(--orange);border:1px solid rgba(247,127,0,0.3);padding:10px 14px;font-family:var(--mono);font-size:12px;margin:0 0 var(--space-4) 0}
+.wc26-deadline--locked{background:rgba(255,23,68,0.05);color:var(--red);border-color:rgba(255,23,68,0.3)}
+
+/* ── WC26 Bracket Fill Layout ── */
+.wc26-bracket-fill{padding-bottom:100px}
+
+/* ── WC26 Section Title ── */
+.wc26-section-title{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--orange);text-transform:uppercase;letter-spacing:0.12em;display:flex;align-items:center;gap:8px;margin:var(--space-4) 0 var(--space-3)}
+.wc26-section-title::before{content:'';width:8px;height:1px;background:var(--orange)}
+
+/* ── WC26 Group Grid ── */
+.wc26-grp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:1px;background:var(--lp-border)}
+
+/* ── WC26 Group Card ── */
+.wc26-grp-card{background:var(--bg-panel);padding:14px 16px}
+.wc26-grp-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.wc26-grp-letter{font-family:var(--mono);font-weight:700;font-size:14px;color:var(--fg)}
+.wc26-grp-progress{font-family:var(--mono);font-size:11px;color:var(--fg-muted);font-variant-numeric:tabular-nums}
+
+.wc26-grp-standings{border:1px solid var(--lp-border);background:var(--bg);padding:6px 10px;margin-bottom:12px}
+.wc26-grp-standings-head,.wc26-grp-standings-row{display:grid;grid-template-columns:1fr 22px 22px 22px 22px 32px 32px;align-items:center;font-family:var(--mono);font-size:11px;padding:3px 0}
+.wc26-grp-standings-head{color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.04em;font-size:9px;font-weight:600;border-bottom:1px solid var(--lp-border)}
+.wc26-grp-standings-head>*{text-align:right}.wc26-grp-standings-head>:first-child{text-align:left}
+.wc26-grp-standings-row{border-top:1px solid #0f0f0f}
+.wc26-grp-standings-row:first-of-type{border-top:none}
+.wc26-grp-standings-row>*{text-align:right}.wc26-grp-standings-row>:first-child{text-align:left}
+.wc26-grp-standings-row.qualified{box-shadow:inset 3px 0 0 var(--orange)}
+.wc26-grp-standings-row.qualified .wc26-grp-name{font-weight:600;color:var(--orange)}
+
+.wc26-grp-team{display:inline-flex;align-items:center;gap:6px;min-width:0}
+.wc26-grp-flag{font-size:14px;line-height:1}
+.wc26-grp-name{font-family:var(--mono);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--fg)}
+.wc26-bold{font-weight:700}
+
+.wc26-grp-matches{display:flex;flex-direction:column;gap:0}
+.wc26-grp-match{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:6px 4px;border-top:1px solid #0f0f0f}
+.wc26-grp-match:first-of-type{border-top:none}
+.wc26-grp-match-side{display:flex;align-items:center;gap:6px;min-width:0}
+.wc26-grp-match-side--away{justify-content:flex-end}
+.wc26-grp-match-scores{display:flex;align-items:center;gap:6px}
+.wc26-grp-vs{color:var(--fg-muted);font-family:var(--mono);font-size:13px}
+
+/* ── WC26 Score Input ── */
+.wc26-score-input{width:44px;height:28px;border:1px solid var(--lp-border);background:var(--bg-cell);color:var(--fg);font-family:var(--mono);font-size:13px;text-align:center;padding:0 4px;font-variant-numeric:tabular-nums;outline:none;transition:border-color 0.15s}
+.wc26-score-input:focus{border-color:var(--orange)}
+.wc26-score-input:disabled{background:var(--bg);color:var(--fg-muted);cursor:not-allowed}
+
+/* ── WC26 Knockout ── */
+.wc26-ko-gate{background:var(--bg);border:1px dashed var(--lp-border);padding:10px 14px;font-family:var(--mono);font-size:12px;color:var(--fg-muted);margin-bottom:14px}
+.wc26-ko-round-block{margin-bottom:22px}
+.wc26-ko-round-label{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--fg-muted);text-transform:uppercase;letter-spacing:0.06em;margin:14px 0 10px}
+.wc26-ko-round-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--lp-border)}
+
+.wc26-ko-card{background:var(--bg-panel);padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.wc26-ko-card--pending{background:var(--bg);border:1px dashed var(--lp-border)}
+.wc26-ko-card--picked{box-shadow:inset 3px 0 0 var(--orange)}
+
+.wc26-ko-card-head{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--fg-muted);font-weight:500;text-transform:uppercase;letter-spacing:0.06em}
+.wc26-ko-mid{font-variant-numeric:tabular-nums}
+.wc26-ko-pending{font-family:var(--mono);font-size:11px;color:var(--fg-muted);font-style:italic;padding:4px 0}
+
+.wc26-ko-side{display:grid;grid-template-columns:24px 1fr 44px;align-items:center;gap:8px;padding:5px 0;border-top:1px solid #0f0f0f}
+.wc26-ko-side:first-of-type{border-top:none}
+.wc26-ko-side--winner{background:rgba(247,127,0,0.05)}
+.wc26-ko-side--winner .wc26-grp-name{font-weight:600;color:var(--orange)}
+
+.wc26-ko-pick{width:22px;height:22px;border-radius:50%;border:1px solid var(--lp-border);background:var(--bg-cell);color:transparent;font-size:12px;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s}
+.wc26-ko-pick--on{background:var(--orange);border-color:var(--orange-dim);color:#000}
+.wc26-ko-pick:disabled{cursor:not-allowed;opacity:0.5}
+
+.wc26-ko-team{display:inline-flex;align-items:center;gap:6px;min-width:0}
+.wc26-ko-hint{font-family:var(--mono);font-size:10px;color:var(--fg-muted);font-style:italic;padding:2px 4px 0}
+
+/* ── WC26 Submit Bar ── */
+.wc26-submit-bar{position:sticky;bottom:0;background:var(--bg-panel);border-top:1px solid var(--lp-border);padding:12px 24px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;z-index:20}
+.wc26-submit-state{font-family:var(--mono);font-size:12px;color:var(--fg-muted)}
+.wc26-submit-btn{font-family:var(--mono);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;padding:10px 24px;background:var(--orange);color:#000;border:none;cursor:pointer;transition:background 0.15s;min-width:160px}
+.wc26-submit-btn:hover:not(:disabled){background:var(--orange-dim)}
+.wc26-submit-btn:disabled{background:var(--fg-muted);color:var(--bg);cursor:not-allowed}
+.wc26-submit-error{grid-column:1/-1;background:rgba(255,23,68,0.05);color:var(--red);border:1px solid rgba(255,23,68,0.3);padding:8px 10px;font-family:var(--mono);font-size:12px;max-height:200px;overflow-y:auto}
+.wc26-submit-error ul{margin:6px 0 0;padding-left:18px}
+.wc26-submit-success{grid-column:1/-1;background:rgba(0,200,83,0.05);color:var(--green);border:1px solid rgba(0,200,83,0.3);padding:8px 10px;font-family:var(--mono);font-size:12px}
+
+/* ── WC26 Leaderboard ── */
+.wc26-lb{background:var(--bg-panel);border:1px solid var(--lp-border);overflow:hidden;margin-bottom:20px}
+.wc26-lb-row{display:grid;grid-template-columns:40px 1fr auto;align-items:center;padding:10px 16px;gap:12px;border-bottom:1px solid #0f0f0f}
+.wc26-lb-row:last-child{border-bottom:none}
+.wc26-lb-row.current{background:rgba(247,127,0,0.05)}
+.wc26-lb-rank{font-family:var(--mono);font-size:12px;color:var(--fg-muted);font-variant-numeric:tabular-nums;font-weight:500}
+.wc26-lb-row.current .wc26-lb-rank{color:var(--orange);font-weight:600}
+.wc26-lb-name{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--fg)}
+.wc26-lb-sub{font-family:var(--mono);font-size:10px;color:var(--fg-muted);margin-top:2px}
+.wc26-lb-row.current .wc26-lb-sub{color:var(--orange)}
+.wc26-lb-pts{font-family:var(--mono);font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;text-align:right;min-width:40px;color:var(--fg)}
+.wc26-lb-row.current .wc26-lb-pts{color:var(--orange)}
+.wc26-lb-empty{padding:32px 16px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--fg-muted)}
+
+/* ── WC26 Full-Page Status ── */
+.wc26-status{padding:48px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--fg-muted)}
+
+/* ── WC26 Mobile ── */
+@media(max-width:768px){
+  .wc26-grp-grid{grid-template-columns:1fr}
+  .wc26-ko-round-grid{grid-template-columns:1fr}
+  .wc26-grp-match{grid-template-columns:1fr auto 1fr;gap:6px}
+  .wc26-submit-bar{grid-template-columns:1fr;gap:8px}
+  .wc26-submit-btn{width:100%}
+}
+
 /* ── shadcn base layer (kept for future platform components) ── */
 @layer base {
   body {

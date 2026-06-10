@@ -67,11 +67,6 @@ export default function Navbar() {
           </a>
         </li>
         <li>
-          <a href="#markets" onClick={closeMenu}>
-            Markets
-          </a>
-        </li>
-        <li>
           <span className="nav-time">{time}</span>
         </li>
         <li>
