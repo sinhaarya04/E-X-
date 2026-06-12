@@ -1,18 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
 const NEU_DOMAINS = ["@northeastern.edu", "@husky.neu.edu"];
 
 export default function SignupPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [done, setDone] = useState(false);
 
   function isNeuEmail(addr: string) {
     return NEU_DOMAINS.some((d) => addr.toLowerCase().endsWith(d));
@@ -37,12 +38,11 @@ export default function SignupPage() {
     setLoading(true);
 
     const supabase = createClient();
-    const { error: authError } = await supabase.auth.signUp({
+    const { data, error: authError } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: { display_name: displayName || email.split("@")[0] },
-        emailRedirectTo: `${window.location.origin}/callback`,
       },
     });
 
@@ -52,41 +52,22 @@ export default function SignupPage() {
       return;
     }
 
-    setDone(true);
-  }
+    // With email confirmation disabled, signUp returns a session immediately.
+    // If for some reason no session came back, fall back to signing in.
+    if (!data.session) {
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (signInError) {
+        setError(signInError.message);
+        setLoading(false);
+        return;
+      }
+    }
 
-  if (done) {
-    return (
-      <div className="auth-page">
-        <div className="auth-shell">
-          <div className="auth-header">
-            <Link href="/" className="auth-logo">
-              E[X]
-            </Link>
-            <p className="auth-tagline">Northeastern Prediction Markets</p>
-          </div>
-          <div className="auth-confirm">
-            <div className="auth-confirm-icon">&#10003;</div>
-            <h2 className="auth-title">Check your email</h2>
-            <p className="auth-confirm-text">
-              We sent a confirmation link to <strong>{email}</strong>. Click it
-              to activate your account and receive your 1,000 Husky Tokens.
-            </p>
-            <Link
-              href="/login"
-              className="auth-btn"
-              style={{
-                display: "block",
-                textAlign: "center",
-                marginTop: "24px",
-              }}
-            >
-              Back to sign in
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
+    router.push("/dashboard");
+    router.refresh();
   }
 
   return (

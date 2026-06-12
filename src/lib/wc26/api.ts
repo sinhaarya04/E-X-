@@ -12,8 +12,12 @@ export interface ApiError extends Error {
   details?: string[];
 }
 
+// Calls go through the same-origin Next.js rewrite at /api/wc26/* to avoid
+// CORS. The destination upstream is configured in next.config.ts.
+// Local override is still supported via NEXT_PUBLIC_WC26_API_URL (e.g.
+// http://localhost:3050 when running the backend directly).
 const BASE_URL = (
-  process.env.NEXT_PUBLIC_WC26_API_URL ?? "http://localhost:3050"
+  process.env.NEXT_PUBLIC_WC26_API_URL ?? "/api/wc26"
 ).replace(/\/+$/, "");
 
 async function getSupabaseToken(): Promise<string | null> {
